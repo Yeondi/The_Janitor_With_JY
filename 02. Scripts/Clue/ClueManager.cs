@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -109,13 +110,13 @@ public class ClueManager : MonoBehaviour
         return loadedClues;
     }
 
-    public ClueData GetSpecificData(int clueId)
+    public ClueData GetSpecificData(int clueId,int pageNumber)
     {
         ClueData item = null;
 
         foreach(var clue in loadedClues)
         {
-            if (clue.Id == clueId)
+            if (clue.Id == clueId && clue.Page == pageNumber)
             {
                 item = clue;
                 break;
@@ -123,6 +124,16 @@ public class ClueManager : MonoBehaviour
         }
 
         return item;
+    }
+
+    public ClueData GetClueByUniqueKey(int uniqueKey)
+    {
+        return loadedClues.FirstOrDefault(clue => clue.GetUniqueKey() == uniqueKey);
+    }
+
+    public List<ClueData> GetCluesByStoryId(int storyId)
+    {
+        return loadedClues.Where(clue => clue.Id == storyId).OrderBy(clue => clue.Page).ToList();
     }
 
 

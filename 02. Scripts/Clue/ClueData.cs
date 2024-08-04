@@ -13,4 +13,9 @@ public class ClueData
         Content = content;
         Page = page;
     }
+
+    public int GetUniqueKey()
+    {
+        return Id * 1000 + Page;
+    }
 }

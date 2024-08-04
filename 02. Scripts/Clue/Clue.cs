@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Clue : MonoBehaviour, IInteractable
 {
-    public string clueId;
+    public string uniqueKey;
     public int page;
 
     public void Interact()
     {
-        Debug.Log("Clues: " + clueId);
-        EventManager.TriggerEvent("ClueCollected", clueId);
+        Debug.Log("Clues: " + uniqueKey);
+        EventManager.TriggerEvent("ClueCollected", uniqueKey);
         Destroy(gameObject);
     }
 }

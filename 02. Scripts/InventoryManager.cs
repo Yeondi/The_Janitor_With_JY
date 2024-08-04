@@ -14,6 +14,7 @@ public class InventoryManager : MonoBehaviour
     public TMP_Text textArea;
     public Button prev;
     public Button next;
+    public GameObject canvas;
 
     [SerializeField]
     //private List<List<ClueData>> currentClues = new List<List<ClueData>>();
@@ -68,6 +69,14 @@ public class InventoryManager : MonoBehaviour
         */
     }
 
+    public void SwitchInventory()
+    {
+        if (canvas.activeSelf)
+            canvas.SetActive(false);
+        else
+            canvas.SetActive(true);
+    }
+
     public void AddClue(ClueData clue)
     {
         currentClues[clue.Id].Add(clue);
@@ -75,18 +84,24 @@ public class InventoryManager : MonoBehaviour
         CreateContent(clue.Id);
     }
 
-    public void AddClue(int clueId)
+    public void AddClue(int uniqueKey)
     {
-        if(!IndexExists(clueId))
+        int clueId = uniqueKey / 1000;
+        int pageNumber = uniqueKey % 1000;
+        bool isNew = false;
+        if (!IndexExists(clueId))
         {
+            isNew = true;
             currentClues[clueId] = new List<ClueData>();
         }
 
-        ClueData data = ClueManager.Instance.GetSpecificData(clueId);
+        ClueData data = ClueManager.Instance.GetSpecificData(clueId,pageNumber);
+        //ClueData data = ClueManager.Instance.GetClueByUniqueKey(uniqueKey);
 
         currentClues[clueId].Add(data);
 
-        CreateContent(clueId);
+        if (isNew)
+           CreateContent(clueId);
     }
 
     public bool IndexExists(int index)
@@ -123,14 +138,16 @@ public class InventoryManager : MonoBehaviour
     void ShowPreviousPage()
     {
         if (searchedClueData.Count == 0) return;
-        currentPageIndex = (currentPageIndex - 1 + searchedClueData.Count) % searchedClueData.Count;
+        //currentPageIndex = (currentPageIndex - 1 + searchedClueData.Count) % searchedClueData.Count;
+        currentPageIndex = (currentPageIndex - 1 < 0) ? currentPageIndex : currentPageIndex - 1;
         DisplayCurrentPage();
     }
 
     void ShowNextPage()
     {
         if (searchedClueData.Count == 0) return;
-        currentPageIndex = (currentPageIndex + 1) % searchedClueData.Count;
+        //currentPageIndex = (currentPageIndex + 1) % searchedClueData.Count;
+        currentPageIndex = (currentPageIndex + 1 >= searchedClueData.Count) ? currentPageIndex : currentPageIndex + 1;
         DisplayCurrentPage();
     }
 

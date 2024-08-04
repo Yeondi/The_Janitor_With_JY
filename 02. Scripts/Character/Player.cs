@@ -197,11 +197,19 @@ public class Player : Character
         }
     }
 
+    public void OnOpenInventory(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            inventoryManager.SwitchInventory();
+        }
+    }
+
     private void OnClueCollected(object clueInfo)
     {
         //int collectedClueId = (int)clueInfo;
         int collectedClueId = int.Parse(clueInfo.ToString());
-        Debug.Log("단서 획득: " + clueInfo);
+        //Debug.Log("단서 획득: " + clueInfo);
 
         if (ClueManager.Instance != null)
         {

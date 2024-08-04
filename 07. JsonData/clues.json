@@ -1,18 +1,18 @@
 [
   {
-    "Id": 1000000,
+    "Id": 1000,
     "Type": "Memo",
     "Content": "pretest 테스트 1번페이지",
     "Page": 1
   },
   {
-    "Id": 1000000,
+    "Id": 1000,
     "Type": "Memo",
     "Content": "2번페이지당",
     "Page": 2
   },
   {
-    "Id": 9000000,
+    "Id": 9000,
     "Type": "Memo",
     "Content": "이거 뜨면 이상한거 ~",
     "Page": 3
